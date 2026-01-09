@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NMOS Port Explorer</title>
+    <link rel="icon" href="nmos-favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="title-section">
+                <div class="icon">
+                    <img src="nmos-favicon.svg" alt="NMOS Port Explorer icon">
+                </div>
+                <div>
+                    <h1>NMOS Port Explorer</h1>
+                    <p>Browser-based NMOS IS-04/IS-05 endpoint discovery tool</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="warning">
+            <p>⚠ <strong>Use only on systems you own or are authorized to test.</strong> This tool performs HTTP-based endpoint discovery.</p>
+        </div>
+
+        <div class="form-section">
+            <form id="explorerForm" class="form-card">
+                <!-- Target Section -->
+                <div class="form-section-header">
+                    <h3>Target Configuration</h3>
+                </div>
+                <div class="form-row">
+                    <div class="form-group form-group-full">
+                        <label for="target">Target</label>
+                        <input type="text" id="target" placeholder="192.168.10.25 or nmos-device.local" required>
+                        <small>IP address or hostname</small>
+                    </div>
+                </div>
+
+                <!-- Port Selection Section -->
+                <div class="form-section-header">
+                    <h3>Port Selection</h3>
+                </div>
+                <div class="port-tabs">
+                    <button type="button" class="port-tab active" data-tab="list">List</button>
+                    <button type="button" class="port-tab" data-tab="range">Range</button>
+                </div>
+                <div class="port-tab-content active" id="portTabList">
+                    <div class="form-group">
+                        <label for="portList">Port Numbers</label>
+                        <input type="text" id="portList" value="80,443,8080,8443,3000,3001,3211,3221,5000,5001,9080">
+                        <small>Comma-separated port numbers (e.g., 80,443,8080,8443)</small>
+                    </div>
+                </div>
+                <div class="port-tab-content" id="portTabRange">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="portRangeStart">Start Port</label>
+                            <input type="number" id="portRangeStart" placeholder="8000" min="1" max="65535">
+                        </div>
+                        <div class="form-group">
+                            <label for="portRangeEnd">End Port</label>
+                            <input type="number" id="portRangeEnd" placeholder="8999" min="1" max="65535">
+                        </div>
+                    </div>
+                    <small class="range-info">Range limit: 10000 ports maximum</small>
+                </div>
+
+                <!-- NMOS Settings Section -->
+                <div class="form-section-header section-header-toggle">
+                    <h3>NMOS Settings</h3>
+                    <button type="button" class="section-toggle is-collapsed" data-target="nmosSettings" aria-expanded="false" aria-label="Toggle NMOS settings">
+                        <span class="chevron" aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="collapsible-content collapsed" id="nmosSettings">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="protocol">Protocol</label>
+                            <select id="protocol">
+                                <option value="http">HTTP</option>
+                                <option value="https">HTTPS</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="endpoint">Endpoint Prefix</label>
+                            <input type="text" id="endpoint" value="/x-nmos">
+                            <small>NMOS endpoint prefix</small>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group form-group-full">
+                            <label for="basePath">Base Path (optional)</label>
+                            <input type="text" id="basePath" placeholder="/api,/nmos or leave empty">
+                            <small>Comma-separated base paths</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Performance Settings Section -->
+                <div class="form-section-header section-header-toggle">
+                    <h3>Performance Settings</h3>
+                    <button type="button" class="section-toggle is-collapsed" data-target="performanceSettings" aria-expanded="false" aria-label="Toggle performance settings">
+                        <span class="chevron" aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="collapsible-content collapsed" id="performanceSettings">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="timeout">Timeout (ms)</label>
+                            <input type="number" id="timeout" value="100" min="100" max="10000">
+                            <small>Request timeout</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="interval">Interval (ms)</label>
+                            <input type="number" id="interval" value="0" min="0" max="5000">
+                            <small>Delay between requests</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="concurrency">Concurrency</label>
+                            <input type="number" id="concurrency" value="10" min="1" max="10">
+                            <small>Max simultaneous requests</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="primary" id="startBtn">Start Exploration</button>
+                    <button type="button" class="secondary" id="stopBtn" disabled>Stop</button>
+                    <button type="button" class="secondary" id="clearBtn">Clear Results</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="progress-section" id="progressSection">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill">0%</div>
+            </div>
+            <div class="progress-info" id="progressInfo">Initializing...</div>
+        </div>
+
+        <div class="results-section" id="resultsSection">
+            <div class="results-card">
+                <div class="results-header">
+                    <h2>Exploration Results</h2>
+                    <div class="results-stats" id="resultsStats">0 results</div>
+                </div>
+                <div id="resultsContainer">
+                    <div class="no-results">
+                        <p>No results yet. Start an exploration to see discovered endpoints.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
