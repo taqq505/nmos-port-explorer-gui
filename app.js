@@ -525,6 +525,38 @@ document.querySelectorAll('.section-toggle').forEach(toggle => {
     });
 });
 
+// Modal functions
+function openModal(modalId) {
+    document.getElementById(modalId).classList.add('active');
+}
+
+function closeModal(modalId) {
+    document.getElementById(modalId).classList.remove('active');
+}
+
+function resetSettings() {
+    if (confirm('Reset all settings to defaults?')) {
+        document.getElementById('portList').value = defaultPortList;
+        document.getElementById('portRangeStart').value = '';
+        document.getElementById('portRangeEnd').value = '';
+        document.getElementById('interval').value = 0;
+        document.getElementById('timeout').value = 100;
+        document.getElementById('concurrency').value = 10;
+        document.getElementById('protocol').value = 'http';
+        document.getElementById('endpoint').value = '/x-nmos';
+        document.getElementById('basePath').value = '';
+        saveSettings();
+        alert('Settings reset to defaults');
+    }
+}
+
+function clearAllData() {
+    if (confirm('Clear all stored data including settings and results?')) {
+        localStorage.clear();
+        location.reload();
+    }
+}
+
 // Event Listeners
 form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -533,6 +565,78 @@ form.addEventListener('submit', (e) => {
 
 stopBtn.addEventListener('click', stopExploration);
 clearBtn.addEventListener('click', clearResults);
+
+// Settings tab switching
+document.querySelectorAll('.settings-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+        const modal = tab.closest('.modal');
+        const tabName = tab.dataset.tab;
+
+        // Remove active from all tabs in this modal
+        modal.querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active'));
+        modal.querySelectorAll('.settings-tab-content').forEach(c => c.classList.remove('active'));
+
+        // Add active to clicked tab
+        tab.classList.add('active');
+        const targetContent = modal.querySelector(`#${tabName}Tab`);
+        if (targetContent) {
+            targetContent.classList.add('active');
+        }
+    });
+});
+
+// Accordion functionality
+document.querySelectorAll('.accordion-header').forEach(header => {
+    header.addEventListener('click', () => {
+        const accordionId = header.dataset.accordion;
+        const content = document.getElementById(accordionId);
+        const isActive = header.classList.contains('active');
+
+        // Close all accordions in the same container
+        const accordion = header.closest('.accordion');
+        accordion.querySelectorAll('.accordion-header').forEach(h => h.classList.remove('active'));
+        accordion.querySelectorAll('.accordion-content').forEach(c => c.classList.remove('active'));
+
+        // Toggle current accordion
+        if (!isActive) {
+            header.classList.add('active');
+            content.classList.add('active');
+        }
+    });
+});
+
+// Modal event listeners
+document.getElementById('settingsBtn').addEventListener('click', () => openModal('settingsModal'));
+document.getElementById('aboutBtn').addEventListener('click', () => {
+    openModal('settingsModal');
+    // Switch to About tab
+    const settingsModal = document.getElementById('settingsModal');
+    settingsModal.querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active'));
+    settingsModal.querySelectorAll('.settings-tab-content').forEach(c => c.classList.remove('active'));
+    settingsModal.querySelector('[data-tab="about"]').classList.add('active');
+    document.getElementById('aboutTab').classList.add('active');
+});
+document.getElementById('settingsModalClose').addEventListener('click', () => closeModal('settingsModal'));
+document.getElementById('resetSettingsBtn').addEventListener('click', resetSettings);
+document.getElementById('clearStorageBtn').addEventListener('click', clearAllData);
+
+// Close modal on background click
+document.querySelectorAll('.modal').forEach(modal => {
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal(modal.id);
+        }
+    });
+});
+
+// Close modal on ESC key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        document.querySelectorAll('.modal.active').forEach(modal => {
+            closeModal(modal.id);
+        });
+    }
+});
 
 // Set custom validation messages
 document.getElementById('target').addEventListener('invalid', function(e) {

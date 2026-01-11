@@ -8,15 +8,30 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="title-section">
-                <div class="icon">
-                    <img src="nmos-favicon.svg" alt="NMOS Port Explorer icon">
-                </div>
-                <div>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <img class="logo-icon" src="nmos-favicon.svg" alt="NMOS Port Explorer">
                     <h1>NMOS Port Explorer</h1>
-                    <p>Browser-based NMOS IS-04/IS-05 endpoint discovery tool</p>
+                </div>
+                <div class="header-actions">
+                    <button id="settingsBtn" class="btn btn-secondary">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"/>
+                            <path d="M19.4 15a1.8 1.8 0 0 0 .34 1.98l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.8 1.8 0 0 0-1.98-.34 1.8 1.8 0 0 0-1.08 1.64V21a2 2 0 1 1-4 0v-.09a1.8 1.8 0 0 0-1.08-1.64 1.8 1.8 0 0 0-1.98.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.8 1.8 0 0 0 4.6 15a1.8 1.8 0 0 0-1.64-1.08H2a2 2 0 1 1 0-4h.96a1.8 1.8 0 0 0 1.64-1.08 1.8 1.8 0 0 0-.34-1.98l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.8 1.8 0 0 0 1.98.34H9a1.8 1.8 0 0 0 1.08-1.64V3a2 2 0 1 1 4 0v.09c0 .7.4 1.33 1.08 1.64.6.26 1.3.15 1.98-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06c-.5.5-.6 1.2-.34 1.98.27.68.9 1.08 1.64 1.08H22a2 2 0 1 1 0 4h-.09c-.7 0-1.33.4-1.64 1.08z"/>
+                        </svg>
+                        Settings
+                    </button>
+                    <button id="aboutBtn" class="btn btn-secondary">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 8v4"/>
+                            <path d="M12 16h.01"/>
+                        </svg>
+                        About
+                    </button>
                 </div>
             </div>
         </header>
@@ -152,6 +167,308 @@
                         <p>No results yet. Start an exploration to see discovered endpoints.</p>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal" id="settingsModal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2>Settings</h2>
+                <button type="button" class="modal-close" id="settingsModalClose">&times;</button>
+            </div>
+            <div class="settings-content">
+                <!-- Tabs -->
+                <div class="settings-tabs">
+                    <button class="settings-tab active" data-tab="history">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                        History
+                    </button>
+                    <button class="settings-tab" data-tab="reset">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+                            <path d="M21 3v5h-5"/>
+                            <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
+                            <path d="M3 21v-5h5"/>
+                        </svg>
+                        Reset
+                    </button>
+                    <button class="settings-tab" data-tab="cors">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 8v4"/>
+                            <path d="M12 16h.01"/>
+                        </svg>
+                        CORS
+                    </button>
+                    <button class="settings-tab" data-tab="howto">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                            <line x1="12" y1="17" x2="12.01" y2="17"/>
+                        </svg>
+                        How It Works
+                    </button>
+                    <button class="settings-tab" data-tab="about">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2l10 6v8l-10 6-10-6V8l10-6z"/>
+                            <path d="M12 22V12"/>
+                            <path d="M22 8L12 12 2 8"/>
+                        </svg>
+                        About
+                    </button>
+                </div>
+
+                <!-- Tab Content: History -->
+                <div id="historyTab" class="settings-tab-content active">
+                    <h3>Settings History</h3>
+                    <p>Settings are automatically saved when you make changes in the form. Your last used configuration will be loaded when you return.</p>
+                    <div class="info-box">
+                        <strong>Auto-save enabled</strong>
+                        <p>All form changes are saved to localStorage immediately.</p>
+                    </div>
+                </div>
+
+                <!-- Tab Content: Reset -->
+                <div id="resetTab" class="settings-tab-content">
+                    <h3>Reset Options</h3>
+                    <p>Reset your configuration to default settings or clear all stored data.</p>
+                    <div class="settings-actions">
+                        <button type="button" class="modal-btn secondary" id="resetSettingsBtn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+                                <path d="M21 3v5h-5"></path>
+                                <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+                                <path d="M3 21v-5h5"></path>
+                            </svg>
+                            Reset to Defaults
+                        </button>
+                        <button type="button" class="modal-btn secondary" id="clearStorageBtn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            </svg>
+                            Clear All Data
+                        </button>
+                    </div>
+                    <div class="warning-box">
+                        <strong>⚠ Warning</strong>
+                        <p>Clearing all data will remove your settings and discovered port history. This action cannot be undone.</p>
+                    </div>
+                </div>
+
+                <!-- Tab Content: CORS -->
+                <div id="corsTab" class="settings-tab-content">
+                    <h3>CORS Information</h3>
+                    <p>Cross-Origin Resource Sharing (CORS) is a security mechanism in browsers that restricts web applications from making requests to different domains.</p>
+
+                    <h4>Status Meanings:</h4>
+                    <div class="status-list">
+                        <div class="status-item">
+                            <span class="status-badge status-readable">🟢 READABLE_OK</span>
+                            <p>The endpoint is accessible and returned valid NMOS data.</p>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-badge status-cors">🟡 REACHABLE_CORS_BLOCKED</span>
+                            <p>The endpoint is reachable but CORS headers prevent reading the response. The NMOS service likely exists.</p>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-badge status-unreachable">🔴 UNREACHABLE</span>
+                            <p>The endpoint did not respond within the timeout period.</p>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-badge status-not-nmos">🔵 OPEN_NOT_NMOS</span>
+                            <p>The port is open but does not appear to host an NMOS service.</p>
+                        </div>
+                    </div>
+
+                    <h4>Workarounds:</h4>
+                    <ul>
+                        <li>Configure CORS headers on the NMOS device</li>
+                        <li>Use a browser extension to disable CORS (for testing only)</li>
+                        <li>Access the endpoints directly in a new tab</li>
+                    </ul>
+                </div>
+
+                <!-- Tab Content: How It Works -->
+                <div id="howtoTab" class="settings-tab-content">
+                    <h3>How It Works</h3>
+                    <p>NMOS Port Explorer discovers NMOS IS-04/IS-05 endpoints by systematically testing ports on a target device.</p>
+
+                    <h4>Features:</h4>
+                    <ul>
+                        <li><strong>Port Selection:</strong> Test specific ports (list) or ranges (up to 10,000 ports)</li>
+                        <li><strong>Protocol Support:</strong> HTTP and HTTPS protocols</li>
+                        <li><strong>Base Path Detection:</strong> Tests multiple base paths for non-standard deployments</li>
+                        <li><strong>Concurrent Scanning:</strong> Adjustable concurrency (1-10 simultaneous requests)</li>
+                        <li><strong>Performance Tuning:</strong> Configurable timeout and interval settings</li>
+                        <li><strong>Auto-save:</strong> Settings and discovered ports persist automatically</li>
+                    </ul>
+
+                    <h4>Discovery Process:</h4>
+                    <ol>
+                        <li>Test each port for NMOS API endpoints (/x-nmos/node, /x-nmos/connection, etc.)</li>
+                        <li>Analyze responses to identify API type and versions</li>
+                        <li>Calculate NMOS probability based on detected endpoints</li>
+                        <li>Display results with status indicators and direct links</li>
+                    </ol>
+
+                    <div class="info-box">
+                        <strong>💡 Tip</strong>
+                        <p>Start with the default port list for common NMOS deployments. Use range scanning for comprehensive discovery.</p>
+                    </div>
+                </div>
+
+                <!-- Tab Content: About -->
+                <div id="aboutTab" class="settings-tab-content">
+                    <div class="about-section">
+                        <h3>About NMOS Port Explorer</h3>
+                        <p><strong>Version:</strong> 1.0.0</p>
+                        <p><strong>Purpose:</strong> Browser-based NMOS IS-04/IS-05 endpoint discovery tool for when DNS-SD is unavailable or broken.</p>
+                    </div>
+
+                    <div class="about-section">
+                        <h3>Features</h3>
+                        <ul>
+                            <li>Port scanning via list or range (up to 10,000 ports)</li>
+                            <li>Protocol selection (HTTP/HTTPS)</li>
+                            <li>Concurrent request processing</li>
+                            <li>CORS detection and handling</li>
+                            <li>Automatic settings persistence</li>
+                        </ul>
+                    </div>
+
+                    <div class="about-section">
+                        <h3>NMOS APIs Detected</h3>
+                        <ul>
+                            <li>Node IS-04 (Registration and Discovery)</li>
+                            <li>Node IS-05 (Connection Management)</li>
+                            <li>Registry IS-04 Query</li>
+                            <li>Registry IS-04 Registration</li>
+                        </ul>
+                    </div>
+
+                    <!-- Accordion Sections -->
+                    <div class="accordion">
+                        <div class="accordion-item">
+                            <button class="accordion-header" data-accordion="privacy">
+                                <span>Privacy Policy</span>
+                                <svg class="accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </button>
+                            <div class="accordion-content" id="privacy">
+                                <p>This application runs entirely in your browser. No data is collected, transmitted, or stored on external servers.</p>
+                                <ul>
+                                    <li><strong>Local Storage:</strong> Settings and discovered ports are saved to your browser's localStorage</li>
+                                    <li><strong>Network Requests:</strong> Only made to the target devices you specify</li>
+                                    <li><strong>No Tracking:</strong> No analytics, cookies, or third-party services</li>
+                                    <li><strong>Open Source:</strong> All code is visible and auditable</li>
+                                </ul>
+                                <p>Your privacy is fully protected. All operations are performed locally in your browser.</p>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <button class="accordion-header" data-accordion="license">
+                                <span>License</span>
+                                <svg class="accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </button>
+                            <div class="accordion-content" id="license">
+                                <p><strong>MIT License</strong></p>
+                                <p>Copyright (c) 2026 NMOS Port Explorer</p>
+                                <p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+                                <p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+                                <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="modal-footer-note">⚠ Use only on systems you own or are authorized to test.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Modal (deprecated - now a tab in Settings) -->
+    <div class="modal" id="aboutModal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2>About NMOS Port Explorer</h2>
+                <button type="button" class="modal-close" id="aboutModalClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="about-section">
+                    <p><strong>Version:</strong> 1.0.0</p>
+                    <p><strong>Purpose:</strong> Browser-based NMOS IS-04/IS-05 endpoint discovery tool for when DNS-SD is unavailable or broken.</p>
+                </div>
+
+                <div class="about-section">
+                    <h3>Features</h3>
+                    <ul>
+                        <li>Port scanning via list or range (up to 10,000 ports)</li>
+                        <li>Protocol selection (HTTP/HTTPS)</li>
+                        <li>Concurrent request processing</li>
+                        <li>CORS detection and handling</li>
+                        <li>Automatic settings persistence</li>
+                    </ul>
+                </div>
+
+                <div class="about-section">
+                    <h3>NMOS APIs Detected</h3>
+                    <ul>
+                        <li>Node IS-04 (Registration and Discovery)</li>
+                        <li>Node IS-05 (Connection Management)</li>
+                        <li>Registry IS-04 Query</li>
+                        <li>Registry IS-04 Registration</li>
+                    </ul>
+                </div>
+
+                <!-- Accordion Sections -->
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <button class="accordion-header" data-accordion="privacy">
+                            <span>Privacy Policy</span>
+                            <svg class="accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="accordion-content" id="privacy">
+                            <p>This application runs entirely in your browser. No data is collected, transmitted, or stored on external servers.</p>
+                            <ul>
+                                <li><strong>Local Storage:</strong> Settings and discovered ports are saved to your browser's localStorage</li>
+                                <li><strong>Network Requests:</strong> Only made to the target devices you specify</li>
+                                <li><strong>No Tracking:</strong> No analytics, cookies, or third-party services</li>
+                                <li><strong>Open Source:</strong> All code is visible and auditable</li>
+                            </ul>
+                            <p>Your privacy is fully protected. All operations are performed locally in your browser.</p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-header" data-accordion="license">
+                            <span>License</span>
+                            <svg class="accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="accordion-content" id="license">
+                            <p><strong>MIT License</strong></p>
+                            <p>Copyright (c) 2026 NMOS Port Explorer</p>
+                            <p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+                            <p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+                            <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="modal-footer-note">⚠ Use only on systems you own or are authorized to test.</p>
             </div>
         </div>
     </div>
