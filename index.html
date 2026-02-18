@@ -296,101 +296,148 @@
 
                 <!-- Tab Content: How It Works -->
                 <div id="howtoTab" class="settings-tab-content">
-                    <h3>How It Works</h3>
-                    <p>NMOS Port Explorer discovers NMOS IS-04/IS-05 endpoints by systematically testing ports on a target device.</p>
+                    <div class="about-section">
+                        <h3>How It Works</h3>
+                        <p>NMOS Port Explorer discovers NMOS IS-04/IS-05 endpoints by systematically testing ports on a target device.</p>
 
-                    <h4>Features:</h4>
-                    <ul>
-                        <li><strong>Port Selection:</strong> Test specific ports (list) or ranges (up to 10,000 ports)</li>
-                        <li><strong>Protocol Support:</strong> HTTP and HTTPS protocols</li>
-                        <li><strong>Base Path Detection:</strong> Tests multiple base paths for non-standard deployments</li>
-                        <li><strong>Concurrent Scanning:</strong> Adjustable concurrency (1-10 simultaneous requests)</li>
-                        <li><strong>Performance Tuning:</strong> Configurable timeout and interval settings</li>
-                        <li><strong>Auto-save:</strong> Settings and discovered ports persist automatically</li>
-                    </ul>
+                        <h4>Features</h4>
+                        <ul>
+                            <li><strong>Port Selection:</strong> Test specific ports (list) or ranges (up to 10,000 ports)</li>
+                            <li><strong>Protocol Support:</strong> HTTP and HTTPS protocols</li>
+                            <li><strong>Base Path Detection:</strong> Tests multiple base paths for non-standard deployments</li>
+                            <li><strong>Concurrent Scanning:</strong> Adjustable concurrency (1-10 simultaneous requests)</li>
+                            <li><strong>Performance Tuning:</strong> Configurable timeout and interval settings</li>
+                            <li><strong>Auto-save:</strong> Settings and discovered ports persist automatically</li>
+                        </ul>
 
-                    <h4>Discovery Process:</h4>
-                    <ol>
-                        <li>Test each port for NMOS API endpoints (/x-nmos/node, /x-nmos/connection, etc.)</li>
-                        <li>Analyze responses to identify API type and versions</li>
-                        <li>Calculate NMOS probability based on detected endpoints</li>
-                        <li>Display results with status indicators and direct links</li>
-                    </ol>
+                        <h4>Discovery Process</h4>
+                        <ol class="howto-steps">
+                            <li>Test each port for NMOS API endpoints (/x-nmos/node, /x-nmos/connection, etc.)</li>
+                            <li>Analyze responses to identify API type and versions</li>
+                            <li>Calculate NMOS probability based on detected endpoints</li>
+                            <li>Display results with status indicators and direct links</li>
+                        </ol>
 
-                    <div class="info-box">
-                        <strong>💡 Tip</strong>
-                        <p>Start with the default port list for common NMOS deployments. Use range scanning for comprehensive discovery.</p>
+                        <div class="info-box">
+                            <strong>💡 Tip</strong>
+                            <p>Start with the default port list for common NMOS deployments. Use range scanning for comprehensive discovery.</p>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Tab Content: About -->
                 <div id="aboutTab" class="settings-tab-content">
                     <div class="about-section">
-                        <h3>About NMOS Port Explorer</h3>
-                        <p><strong>Version:</strong> 1.0.0</p>
-                        <p><strong>Purpose:</strong> Browser-based NMOS IS-04/IS-05 endpoint discovery tool for when DNS-SD is unavailable or broken.</p>
-                    </div>
+                        <h3>About NMOS Port Explorer <span class="version-tag">v2026.02.18</span></h3>
+                        <p>A lightweight, browser-only NMOS IS-04/IS-05 endpoint discovery tool for ST 2110 routing.</p>
 
-                    <div class="about-section">
-                        <h3>Features</h3>
-                        <ul>
-                            <li>Port scanning via list or range (up to 10,000 ports)</li>
-                            <li>Protocol selection (HTTP/HTTPS)</li>
-                            <li>Concurrent request processing</li>
-                            <li>CORS detection and handling</li>
-                            <li>Automatic settings persistence</li>
-                        </ul>
-                    </div>
-
-                    <div class="about-section">
-                        <h3>NMOS APIs Detected</h3>
-                        <ul>
-                            <li>Node IS-04 (Registration and Discovery)</li>
-                            <li>Node IS-05 (Connection Management)</li>
-                            <li>Registry IS-04 Query</li>
-                            <li>Registry IS-04 Registration</li>
-                        </ul>
-                    </div>
-
-                    <!-- Accordion Sections -->
-                    <div class="accordion">
-                        <div class="accordion-item">
-                            <button class="accordion-header" data-accordion="privacy">
-                                <span>Privacy Policy</span>
-                                <svg class="accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <polyline points="6 9 12 15 18 9"></polyline>
+                        <h4>Links</h4>
+                        <ul class="about-links">
+                            <li>
+                                <svg class="link-icon github-icon" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                                 </svg>
-                            </button>
-                            <div class="accordion-content" id="privacy">
-                                <p>This application runs entirely in your browser. No data is collected, transmitted, or stored on external servers.</p>
-                                <ul>
-                                    <li><strong>Local Storage:</strong> Settings and discovered ports are saved to your browser's localStorage</li>
-                                    <li><strong>Network Requests:</strong> Only made to the target devices you specify</li>
-                                    <li><strong>No Tracking:</strong> No analytics, cookies, or third-party services</li>
-                                    <li><strong>Open Source:</strong> All code is visible and auditable</li>
-                                </ul>
-                                <p>Your privacy is fully protected. All operations are performed locally in your browser.</p>
+                                <strong>This Project:</strong>
+                                <a href="https://github.com/taqq505/nmos-port-explorer-gui" target="_blank" rel="noopener">
+                                    GitHub Repository
+                                    <svg class="external-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
+                                    </svg>
+                                </a>
+                                /
+                                <a href="https://github.com/taqq505/nmos-port-explorer-gui/issues" target="_blank" rel="noopener">
+                                    Issues
+                                    <svg class="external-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
+                                    </svg>
+                                </a>
+                            </li>
+                            <li>
+                                <svg class="link-icon user-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="12" cy="7" r="4"/>
+                                </svg>
+                                <strong>Developer:</strong>
+                                <a href="https://github.com/taqq505" target="_blank" rel="noopener">
+                                    taqq505 on GitHub
+                                    <svg class="external-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
+                                    </svg>
+                                </a>
+                            </li>
+                            <li>
+                                <svg class="link-icon globe-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <line x1="2" y1="12" x2="22" y2="12"/>
+                                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                                </svg>
+                                <strong>Other Projects:</strong>
+                                <a href="https://taqq505.github.io/mmam-website" target="_blank" rel="noopener">
+                                    MMAM Website
+                                    <svg class="external-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
+                                    </svg>
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="accordion">
+                            <!-- Accordion: Privacy Policy -->
+                            <div class="accordion-item">
+                                <button class="accordion-header about-accordion-header" data-accordion="about-privacy">
+                                    <svg class="accordion-icon about-accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M9 18l6-6-6-6"/>
+                                    </svg>
+                                    <span>Privacy Policy</span>
+                                </button>
+                                <div class="accordion-content" id="about-privacy">
+                                    <div class="privacy-content">
+                                        <h5>Data Collection</h5>
+                                        <p>This tool collects no personal data. No cookies, analytics, or tracking of any kind are used.</p>
+
+                                        <h5>Local Storage</h5>
+                                        <p>Your settings and scan history are saved only in your browser's localStorage. This data never leaves your device.</p>
+
+                                        <h5>Network Requests</h5>
+                                        <p>The only network requests made are directly to the NMOS devices you specify. No data is sent to any external server.</p>
+
+                                        <h5>Your Data</h5>
+                                        <p>You can clear all locally stored data at any time via Settings → Reset.</p>
+
+                                        <h5>Contact</h5>
+                                        <p>Questions? Contact via <a href="https://github.com/taqq505" target="_blank" rel="noopener">GitHub</a>.</p>
+
+                                        <p class="privacy-updated"><small>Last updated: February 18, 2026</small></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Accordion: License & Credits -->
+                            <div class="accordion-item">
+                                <button class="accordion-header about-accordion-header" data-accordion="about-license">
+                                    <svg class="accordion-icon about-accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M9 18l6-6-6-6"/>
+                                    </svg>
+                                    <span>License & Credits</span>
+                                </button>
+                                <div class="accordion-content" id="about-license">
+                                    <p><strong>License:</strong> MIT License (see LICENSE)</p>
+                                    <p><strong>Rights:</strong> &copy; 2026. All rights reserved. Permissions granted under the MIT License.</p>
+                                    <p><strong>Credits:</strong> NMOS IS-04/IS-05 specifications by AMWA.</p>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="accordion-item">
-                            <button class="accordion-header" data-accordion="license">
-                                <span>License</span>
-                                <svg class="accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <polyline points="6 9 12 15 18 9"></polyline>
+                        <div class="support-section">
+                            <p class="support-text">If this tool helped your workflow, consider buying me a coffee ☕</p>
+                            <a href="https://paypal.me/taqq505" target="_blank" rel="noopener" class="support-link">
+                                <svg class="paypal-icon" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M8.32 21.97a.546.546 0 0 1-.26-.32c-.03-.15-.01-.89.26-2.89a.5.5 0 0 1 .49-.42h2.84c1.66 0 2.95-.33 3.84-1 .89-.67 1.48-1.69 1.76-3.05.28-1.36.21-2.48-.2-3.37-.4-.88-1.17-1.54-2.29-1.97a7.5 7.5 0 0 0-3.26-.65H8.74a.74.74 0 0 0-.73.62L6.2 20.23a.55.55 0 0 1-.54.47H3.02a.5.5 0 0 1-.49-.6L4.62 5.23a1.5 1.5 0 0 1 1.48-1.26h6.37c1.74 0 3.15.24 4.23.73 1.07.49 1.85 1.21 2.32 2.17.47.96.63 2.15.46 3.56-.16 1.37-.55 2.55-1.16 3.55-.61.99-1.43 1.76-2.46 2.31-1.02.55-2.25.82-3.68.82h-2.1c-.2 0-.37.14-.41.34l-.44 2.73a.75.75 0 0 1-.74.63H8.32z"/>
                                 </svg>
-                            </button>
-                            <div class="accordion-content" id="license">
-                                <p><strong>MIT License</strong></p>
-                                <p>Copyright (c) 2026 NMOS Port Explorer</p>
-                                <p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
-                                <p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
-                                <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
-                            </div>
+                                <span>Support via PayPal</span>
+                            </a>
                         </div>
                     </div>
-
-                    <p class="modal-footer-note">⚠ Use only on systems you own or are authorized to test.</p>
                 </div>
             </div>
         </div>
