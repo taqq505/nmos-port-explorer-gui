@@ -1,6 +1,6 @@
 // NMOS Port Explorer - Service Worker
 // バージョンを上げるとキャッシュが更新されます
-const CACHE_NAME = 'nmos-explorer-v1.0.2';
+const CACHE_NAME = 'nmos-explorer-v1.0.3';
 
 const FILES_TO_CACHE = [
   './',
