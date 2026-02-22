@@ -234,7 +234,7 @@
                             <polyline points="7 10 12 15 17 10"/>
                             <line x1="12" y1="15" x2="12" y2="3"/>
                         </svg>
-                        <span>Install</span>
+                        <span>Install &amp; Update</span>
                     </button>
                 </nav>
                 <div class="settings-panel">
@@ -341,9 +341,9 @@
                     </div>
                 </div>
 
-                <!-- Tab Content: Install -->
+                <!-- Tab Content: Install & Update -->
                 <div id="installTab" class="settings-tab-content">
-                    <h3>Install App</h3>
+                    <h3>Install &amp; Update</h3>
                     <p>Install NMOS Port Explorer as a standalone app for offline use.</p>
 
                     <div id="installStatus" class="install-status">
@@ -391,6 +391,38 @@
                                 Not Available
                             </div>
                             <p>Installation is not available in this browser or the app is already installed. Try opening this page in Chrome.</p>
+                        </div>
+                    </div>
+
+                    <!-- Update Section -->
+                    <div class="install-status-card" style="margin-top:24px">
+                        <h4 style="margin-bottom:12px">App Update</h4>
+                        <p style="font-size:14px; color:var(--text-secondary); margin-bottom:16px">Check if a newer version of the app is available.</p>
+                        <div id="updateStatus" class="install-status-badge unavailable" style="margin-bottom:16px">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="12" y1="8" x2="12" y2="12"/>
+                                <line x1="12" y1="16" x2="12.01" y2="16"/>
+                            </svg>
+                            <span id="updateStatusText">Not checked</span>
+                        </div>
+                        <div style="display:flex; gap:12px; flex-wrap:wrap">
+                            <button id="checkUpdateBtn" class="btn btn-secondary">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+                                    <path d="M21 3v5h-5"/>
+                                    <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
+                                    <path d="M3 21v-5h5"/>
+                                </svg>
+                                Check for Updates
+                            </button>
+                            <button id="applyUpdateBtn" class="btn btn-primary" style="display:none">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="7 10 12 15 17 10"/>
+                                    <line x1="12" y1="15" x2="12" y2="3"/>
+                                </svg>
+                                Apply Update & Reload
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -630,13 +662,52 @@
 
     <script src="app.js"></script>
     <script>
+      let swRegistration = null;
+
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
           navigator.serviceWorker.register('./service-worker.js')
-            .then(reg => console.log('SW registered:', reg.scope))
+            .then(reg => {
+              swRegistration = reg;
+              console.log('SW registered:', reg.scope);
+            })
             .catch(err => console.warn('SW registration failed:', err));
         });
       }
+
+      function setUpdateStatus(type, text) {
+        const badge = document.getElementById('updateStatus');
+        badge.className = 'install-status-badge ' + type;
+        document.getElementById('updateStatusText').textContent = text;
+      }
+
+      document.getElementById('checkUpdateBtn').addEventListener('click', async () => {
+        if (!swRegistration) {
+          setUpdateStatus('unavailable', 'Service Worker not available');
+          return;
+        }
+        setUpdateStatus('installable', 'Checking...');
+        document.getElementById('applyUpdateBtn').style.display = 'none';
+
+        try {
+          await swRegistration.update();
+          if (swRegistration.waiting) {
+            setUpdateStatus('installable', 'Update available!');
+            document.getElementById('applyUpdateBtn').style.display = '';
+          } else {
+            setUpdateStatus('installed', 'Already up to date');
+          }
+        } catch (e) {
+          setUpdateStatus('unavailable', 'Check failed (offline?)');
+        }
+      });
+
+      document.getElementById('applyUpdateBtn').addEventListener('click', () => {
+        if (swRegistration && swRegistration.waiting) {
+          swRegistration.waiting.postMessage({ type: 'SKIP_WAITING' });
+        }
+        location.reload();
+      });
 
       let deferredPrompt;
 

@@ -38,6 +38,13 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
+// 手動アップデート用メッセージ受信
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+});
+
 // フェッチ時: キャッシュ優先、なければネットワークへ
 self.addEventListener('fetch', (event) => {
   // NMOS デバイスへのリクエストはキャッシュしない
