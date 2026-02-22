@@ -1173,6 +1173,10 @@ table td {
     text-align: center;
 }
 
+.install-btn {
+    margin-bottom: 24px;
+}
+
 .support-text {
     color: var(--text-muted);
     font-size: 14px;
@@ -1568,4 +1572,47 @@ table td {
     .btn-cookie {
         flex: 1;
     }
+}
+
+/* Install Tab */
+.install-status-card {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 24px;
+    margin-top: 20px;
+}
+
+.install-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.install-status-badge svg {
+    width: 16px;
+    height: 16px;
+}
+
+.install-status-badge.installed {
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--success);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.install-status-badge.installable {
+    background: rgba(0, 212, 255, 0.15);
+    color: var(--accent-primary);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+}
+
+.install-status-badge.unavailable {
+    background: rgba(100, 116, 139, 0.15);
+    color: var(--text-muted);
+    border: 1px solid rgba(100, 116, 139, 0.3);
 }

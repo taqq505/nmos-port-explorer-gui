@@ -24,14 +24,6 @@
                     <h1>NMOS Port Explorer</h1>
                 </div>
                 <div class="header-actions">
-                    <button id="installBtn" class="btn btn-primary" style="display:none">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                            <polyline points="7 10 12 15 17 10"/>
-                            <line x1="12" y1="15" x2="12" y2="3"/>
-                        </svg>
-                        Install App
-                    </button>
                     <button id="settingsBtn" class="btn btn-secondary">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="3"/>
@@ -236,6 +228,14 @@
                         </svg>
                         <span>About</span>
                     </button>
+                    <button class="settings-tab" data-tab="install">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="7 10 12 15 17 10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                        <span>Install</span>
+                    </button>
                 </nav>
                 <div class="settings-panel">
 
@@ -337,6 +337,60 @@
                         <div class="info-box">
                             <strong>💡 Tip</strong>
                             <p>Start with the default port list for common NMOS deployments. Use range scanning for comprehensive discovery.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Content: Install -->
+                <div id="installTab" class="settings-tab-content">
+                    <h3>Install App</h3>
+                    <p>Install NMOS Port Explorer as a standalone app for offline use.</p>
+
+                    <div id="installStatus" class="install-status">
+                        <div id="installStatusInstalled" class="install-status-card" style="display:none">
+                            <div class="install-status-badge installed">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                                Installed
+                            </div>
+                            <p>NMOS Port Explorer is installed on this device. You can launch it from your desktop or app launcher.</p>
+                            <div class="info-box">
+                                <strong>To uninstall</strong>
+                                <p>Open the installed app → click <strong>⋮</strong> menu (top right) → Uninstall</p>
+                            </div>
+                        </div>
+
+                        <div id="installStatusReady" class="install-status-card" style="display:none">
+                            <div class="install-status-badge installable">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="7 10 12 15 17 10"/>
+                                    <line x1="12" y1="15" x2="12" y2="3"/>
+                                </svg>
+                                Ready to Install
+                            </div>
+                            <p>Click the button below to install the app on your device. It will work offline after installation.</p>
+                            <button id="installBtn" class="btn btn-primary" style="margin-top:16px">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="7 10 12 15 17 10"/>
+                                    <line x1="12" y1="15" x2="12" y2="3"/>
+                                </svg>
+                                Install App
+                            </button>
+                        </div>
+
+                        <div id="installStatusUnavailable" class="install-status-card">
+                            <div class="install-status-badge unavailable">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <line x1="12" y1="8" x2="12" y2="12"/>
+                                    <line x1="12" y1="16" x2="12.01" y2="16"/>
+                                </svg>
+                                Not Available
+                            </div>
+                            <p>Installation is not available in this browser or the app is already installed. Try opening this page in Chrome.</p>
                         </div>
                     </div>
                 </div>
@@ -585,27 +639,37 @@
       }
 
       let deferredPrompt;
-      const installBtn = document.getElementById('installBtn');
+
+      function showInstallStatus(status) {
+        document.getElementById('installStatusInstalled').style.display  = status === 'installed'   ? '' : 'none';
+        document.getElementById('installStatusReady').style.display      = status === 'ready'       ? '' : 'none';
+        document.getElementById('installStatusUnavailable').style.display = status === 'unavailable' ? '' : 'none';
+      }
+
+      // すでにインストール済み（スタンドアロンで起動中）
+      if (window.matchMedia('(display-mode: standalone)').matches) {
+        showInstallStatus('installed');
+      }
 
       window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
         deferredPrompt = e;
-        installBtn.style.display = '';
+        showInstallStatus('ready');
       });
 
-      installBtn.addEventListener('click', async () => {
+      document.getElementById('installBtn').addEventListener('click', async () => {
         if (!deferredPrompt) return;
         deferredPrompt.prompt();
         const { outcome } = await deferredPrompt.userChoice;
         if (outcome === 'accepted') {
-          installBtn.style.display = 'none';
+          showInstallStatus('installed');
         }
         deferredPrompt = null;
       });
 
       window.addEventListener('appinstalled', () => {
-        installBtn.style.display = 'none';
         deferredPrompt = null;
+        showInstallStatus('installed');
       });
     </script>
 </body>
