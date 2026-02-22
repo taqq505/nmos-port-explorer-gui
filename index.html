@@ -80,7 +80,7 @@
                 <div class="port-tab-content active" id="portTabList">
                     <div class="form-group">
                         <label for="portList">Port Numbers</label>
-                        <input type="text" id="portList" value="80,443,8080,8443,3000,3001,3211,3221,5000,5001,9080">
+                        <input type="text" id="portList" value="80,443,3000,3001,3211,3221,5000,5001,8080,8443,9080,18870,18872">
                         <small>Comma-separated port numbers (e.g., 80,443,8080,8443)</small>
                     </div>
                 </div>
@@ -193,15 +193,15 @@
                 <h2>Settings</h2>
                 <button type="button" class="modal-close" id="settingsModalClose">&times;</button>
             </div>
-            <div class="settings-content">
-                <!-- Tabs -->
-                <div class="settings-tabs">
+            <div class="settings-modal-body">
+                <!-- Sidebar -->
+                <nav class="settings-sidebar">
                     <button class="settings-tab active" data-tab="history">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="10"/>
                             <polyline points="12 6 12 12 16 14"/>
                         </svg>
-                        History
+                        <span>History</span>
                     </button>
                     <button class="settings-tab" data-tab="reset">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -210,7 +210,7 @@
                             <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
                             <path d="M3 21v-5h5"/>
                         </svg>
-                        Reset
+                        <span>Reset</span>
                     </button>
                     <button class="settings-tab" data-tab="cors">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -218,7 +218,7 @@
                             <path d="M12 8v4"/>
                             <path d="M12 16h.01"/>
                         </svg>
-                        CORS
+                        <span>CORS</span>
                     </button>
                     <button class="settings-tab" data-tab="howto">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -226,7 +226,7 @@
                             <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
                             <line x1="12" y1="17" x2="12.01" y2="17"/>
                         </svg>
-                        How It Works
+                        <span>How It Works</span>
                     </button>
                     <button class="settings-tab" data-tab="about">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -234,9 +234,10 @@
                             <path d="M12 22V12"/>
                             <path d="M22 8L12 12 2 8"/>
                         </svg>
-                        About
+                        <span>About</span>
                     </button>
-                </div>
+                </nav>
+                <div class="settings-panel">
 
                 <!-- Tab Content: History -->
                 <div id="historyTab" class="settings-tab-content active">
@@ -407,22 +408,37 @@
                                 </button>
                                 <div class="accordion-content" id="about-privacy">
                                     <div class="privacy-content">
-                                        <h5>Data Collection</h5>
-                                        <p>This tool collects no personal data. No cookies, analytics, or tracking of any kind are used.</p>
+                                        <h5>Information Collection and Use</h5>
+                                        <p>This tool is a browser-only application. All data is stored locally in your browser's localStorage and is never transmitted to external servers except as described below.</p>
+
+                                        <h5>Cookies and Analytics</h5>
+                                        <p>We use Google Analytics to understand how visitors use this tool. Google Analytics uses cookies to collect anonymous information including:</p>
+                                        <ul>
+                                            <li>Pages visited and time spent on the site</li>
+                                            <li>Browser type and device information</li>
+                                            <li>General geographic location (country/city level)</li>
+                                        </ul>
+                                        <p>This data helps us improve the tool. No personally identifiable information is collected.</p>
+
+                                        <h5>Third-Party Services</h5>
+                                        <p>This site may use Google AdSense to display advertisements. Google may use cookies to serve ads based on your prior visits to this or other websites. You can opt out of personalized advertising by visiting <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener">Google's Ads Settings</a>.</p>
 
                                         <h5>Local Storage</h5>
                                         <p>Your settings and scan history are saved only in your browser's localStorage. This data never leaves your device.</p>
 
-                                        <h5>Network Requests</h5>
-                                        <p>The only network requests made are directly to the NMOS devices you specify. No data is sent to any external server.</p>
-
-                                        <h5>Your Data</h5>
-                                        <p>You can clear all locally stored data at any time via Settings → Reset.</p>
+                                        <h5>Your Rights</h5>
+                                        <p>You can:</p>
+                                        <ul>
+                                            <li>Decline cookies via the banner when you first visit</li>
+                                            <li>Clear all locally stored data via Settings → Reset</li>
+                                            <li>Disable cookies in your browser settings</li>
+                                            <li>Opt out of Google Analytics by installing the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">Google Analytics Opt-out Browser Add-on</a></li>
+                                        </ul>
 
                                         <h5>Contact</h5>
-                                        <p>Questions? Contact via <a href="https://github.com/taqq505" target="_blank" rel="noopener">GitHub</a>.</p>
+                                        <p>Questions about this privacy policy? Contact via <a href="https://github.com/taqq505" target="_blank" rel="noopener">GitHub</a>.</p>
 
-                                        <p class="privacy-updated"><small>Last updated: February 18, 2026</small></p>
+                                        <p class="privacy-updated"><small>Last updated: February 22, 2026</small></p>
                                     </div>
                                 </div>
                             </div>
@@ -454,7 +470,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
+                </div><!-- /.settings-panel -->
+            </div><!-- /.settings-modal-body -->
         </div>
     </div>
 
@@ -506,7 +523,7 @@
                             <ul>
                                 <li><strong>Local Storage:</strong> Settings and discovered ports are saved to your browser's localStorage</li>
                                 <li><strong>Network Requests:</strong> Only made to the target devices you specify</li>
-                                <li><strong>No Tracking:</strong> No analytics, cookies, or third-party services</li>
+                                <li><strong>Analytics:</strong> Anonymous usage data collected via Google Analytics (with your consent)</li>
                                 <li><strong>Open Source:</strong> All code is visible and auditable</li>
                             </ul>
                             <p>Your privacy is fully protected. All operations are performed locally in your browser.</p>
@@ -531,6 +548,28 @@
                 </div>
 
                 <p class="modal-footer-note">⚠ Use only on systems you own or are authorized to test.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent" class="cookie-consent hidden">
+        <div class="cookie-consent-content">
+            <svg class="cookie-icon" viewBox="0 0 24 24" fill="currentColor">
+                <circle cx="12" cy="12" r="10"/>
+                <circle cx="8" cy="10" r="1.5" fill="#1a1a2e"/>
+                <circle cx="16" cy="10" r="1.5" fill="#1a1a2e"/>
+                <circle cx="12" cy="14" r="1.5" fill="#1a1a2e"/>
+                <circle cx="15" cy="14" r="1.5" fill="#1a1a2e"/>
+                <circle cx="12" cy="7" r="1" fill="#1a1a2e"/>
+            </svg>
+            <div class="cookie-text">
+                <p>We use cookies to improve your experience and analyze site usage. By continuing, you accept our use of cookies.</p>
+                <a href="#privacy" class="cookie-learn-more" id="cookieLearnMore">Learn more</a>
+            </div>
+            <div class="cookie-buttons">
+                <button id="cookieDecline" class="btn-cookie btn-cookie-decline">Decline</button>
+                <button id="cookieAccept" class="btn-cookie btn-cookie-accept">Accept</button>
             </div>
         </div>
     </div>

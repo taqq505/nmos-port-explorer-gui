@@ -663,5 +663,70 @@ document.getElementById('portRangeEnd').addEventListener('input', function(e) {
     e.target.setCustomValidity('');
 });
 
+// Cookie Consent
+function checkCookieConsent() {
+    const consent = localStorage.getItem('cookieConsent');
+    if (consent === null) {
+        showCookieBanner();
+    } else if (consent === 'true') {
+        initializeAnalytics();
+    }
+}
+
+function showCookieBanner() {
+    document.getElementById('cookieConsent').classList.remove('hidden');
+}
+
+function hideCookieBanner() {
+    document.getElementById('cookieConsent').classList.add('hidden');
+}
+
+function handleCookieConsent(accepted) {
+    localStorage.setItem('cookieConsent', accepted.toString());
+    hideCookieBanner();
+    if (accepted) {
+        initializeAnalytics();
+    }
+}
+
+function initializeAnalytics() {
+    // GA tracking ID をここに設定してください
+    // const GA_ID = 'G-XXXXXXXXXX';
+    // if (GA_ID && typeof gtag === 'undefined') {
+    //     const script = document.createElement('script');
+    //     script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
+    //     script.async = true;
+    //     document.head.appendChild(script);
+    //     window.dataLayer = window.dataLayer || [];
+    //     window.gtag = function() { dataLayer.push(arguments); };
+    //     gtag('js', new Date());
+    //     gtag('config', GA_ID);
+    // }
+}
+
+document.getElementById('cookieAccept').addEventListener('click', () => handleCookieConsent(true));
+document.getElementById('cookieDecline').addEventListener('click', () => handleCookieConsent(false));
+document.getElementById('cookieLearnMore').addEventListener('click', (e) => {
+    e.preventDefault();
+    hideCookieBanner();
+    openModal('settingsModal');
+    // About タブに切り替えてプライバシーポリシーへスクロール
+    const modal = document.getElementById('settingsModal');
+    modal.querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active'));
+    modal.querySelectorAll('.settings-tab-content').forEach(c => c.classList.remove('active'));
+    modal.querySelector('[data-tab="about"]').classList.add('active');
+    document.getElementById('aboutTab').classList.add('active');
+    setTimeout(() => {
+        const privacyBtn = document.querySelector('[data-accordion="about-privacy"]');
+        if (privacyBtn && !privacyBtn.classList.contains('active')) {
+            privacyBtn.click();
+        }
+        setTimeout(() => {
+            privacyBtn?.closest('.accordion-item')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+    }, 300);
+});
+
 // Initialize
 loadSettings();
+checkCookieConsent();
